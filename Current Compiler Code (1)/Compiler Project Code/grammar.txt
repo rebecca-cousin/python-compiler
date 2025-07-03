@@ -1,0 +1,27 @@
+expr:    IDENTIFIER EQ expr
+    :    term (PLUS|MINUS) term
+term: factor (MUL|DIV) factor
+factor: INT|FLOAT
+        (PLUS|MINUS) factor
+        :LPAREN expr RPAREN
+
+variablename    =    <expr>
+    |           |  
+IDENTIFIER    EQUALS 
+
+the parser retrurns 'ast'. ast is the value gotten from the return function of parser.parse()
+parser.parse() retrurns 'res'. the value of res is the return of self.expr()
+self.expr() returns a binary operation. (this means that the value of res should be a binary operation)
+self.expr() returns self.bin_op() which returns a binary operation with three values: a left node, a binary operator and a right node.
+the left node could be a number(a number node) or it could be another nested binary operation also known as a (term)
+the binary operator must be * or /.
+the right node could also be a number (number node) or another nested binary operation.(term)
+
+these nested binary operations (terms) will also have a left node, a binary operator and a right node.
+the difference in the nested one is that the left and right nodes must be numbers(number nodes) also known as (factors) 
+and the binary operation must be a + or -. 
+
+2 * 4 + 6 / 8 | 2 - 4 * 6 + 8
+in this example, there are 2 terms: (2 * 4) and (6 / 8)
+there are 4 factors (2, 4, 6, 8)
+there is one expression: (2 * 4 + 6 / 8)
